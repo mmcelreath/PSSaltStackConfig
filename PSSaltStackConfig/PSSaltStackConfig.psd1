@@ -52,7 +52,7 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = 'SSE', 'Salt Stack', 'Salt Stack Enterprise', 'SaltStack', 'SaltStack Config'
+        Tags = 'SSE', 'SaltStack', 'SaltStackEnterprise', 'SaltStackConfig', 'Config'
 
         # A URL to the license for this module.
         # LicenseUri = ''
