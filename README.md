@@ -21,9 +21,10 @@ Install-Module PSSaltStackConfig
 $credential = Get-Credential # User with API permissions
 
 # Connect to SaltStack Config using the provided credential
+# This command will create a Global variable called $global:SaltConnection which will be used for the rest of the functions in this module
 Connect-SaltStackConfig -SaltEnterpriseServer <RAAS_Server> -Credential $credential
 
-Invoke-SaltTestPing -SaltConnection $SaltConnection -Target 'web01'
+Invoke-SaltTestPing -Target 'web01'
 
 ```
 
