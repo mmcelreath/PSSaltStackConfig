@@ -69,7 +69,7 @@ function Set-SaltTarget {
     }
 
     $splat = @{
-        SaltConnection = $SaltConnection
+        SaltConnection = $global:SaltConnection
         ExactMatch = $true
     }
 
@@ -142,7 +142,7 @@ function Set-SaltTarget {
         $arguments.Add('desc',$target.desc)
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource tgt -Method save_target_group -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource tgt -Method save_target_group -Arguments $arguments
     
     Write-Output -InputObject $return
     

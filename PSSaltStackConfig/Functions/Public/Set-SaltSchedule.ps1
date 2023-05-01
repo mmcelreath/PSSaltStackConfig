@@ -76,7 +76,7 @@ function Set-SaltSchedule {
     } 
 
     $splat = @{
-        SaltConnection = $SaltConnection
+        SaltConnection = $global:SaltConnection
         ExactMatch = $true
     }
 
@@ -110,13 +110,13 @@ function Set-SaltSchedule {
     }
 
     if ($TargetName) {
-        $target = Get-SaltTarget -SaltConnection $SaltConnection -Name $TargetName -ExactMatch
+        $target = Get-SaltTarget -SaltConnection $global:SaltConnection -Name $TargetName -ExactMatch
         $targetID = $target.uuid
         $arguments.Add('tgt_uuid', $targetID)
     }
 
     if ($JobName) {
-        $job = Get-Saltjob -SaltConnection $SaltConnection -Name $JobName -ExactMatch
+        $job = Get-Saltjob -SaltConnection $global:SaltConnection -Name $JobName -ExactMatch
         $jobID = $job.uuid
         $arguments.Add('job_uuid', $jobID)
     }
@@ -184,7 +184,7 @@ function Set-SaltSchedule {
         $arguments.Add('schedule', $newSchedule)
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource schedule -Method update -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource schedule -Method update -Arguments $arguments
 
     if ($return.error) {
         $errorDetail = $return.error.detail.state

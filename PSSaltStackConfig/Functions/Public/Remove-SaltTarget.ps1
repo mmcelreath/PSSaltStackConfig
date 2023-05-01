@@ -46,7 +46,7 @@ function Remove-SaltTarget {
     } 
 
     $splat = @{
-        SaltConnection = $SaltConnection
+        SaltConnection = $global:SaltConnection
     }
 
     if ($name) {
@@ -76,7 +76,7 @@ function Remove-SaltTarget {
         $arguments.Add('force',$true)
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource tgt -Method delete_target_group -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource tgt -Method delete_target_group -Arguments $arguments
     
     if ($return.error) {
         $errorDetail = $return.error.detail.state

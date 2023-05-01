@@ -43,7 +43,7 @@ function Remove-SaltSchedule {
     } 
 
     $splat = @{
-        SaltConnection = $SaltConnection
+        SaltConnection = $global:SaltConnection
     }
 
     if ($name) {
@@ -69,7 +69,7 @@ function Remove-SaltSchedule {
         uuid = $scheduleID
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource schedule -Method remove -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource schedule -Method remove -Arguments $arguments
     
     if ($return.error) {
         $errorDetail = $return.error.detail.state

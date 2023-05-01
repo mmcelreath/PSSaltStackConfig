@@ -64,7 +64,7 @@ function Get-SaltTarget {
         $arguments.Add('tgt_uuid',$UUID)
     }
     
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource tgt -Method get_target_group -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource tgt -Method get_target_group -Arguments $arguments
 
     if ($return.error) {
         $errorDetail = $return.error.detail.state

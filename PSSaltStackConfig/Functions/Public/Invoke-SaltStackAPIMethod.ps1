@@ -70,12 +70,12 @@ function Invoke-SaltStackAPIMethod {
     $requestBody = $requestBodyHash | ConvertTo-Json -Depth 10
 
     $invokeRestMethodProps = @{
-        Uri = $SaltConnection.APIURI
-        Headers= $SaltConnection.AuthHeader
+        Uri = $global:SaltConnection.APIURI
+        Headers= $global:SaltConnection.AuthHeader
         Method = 'Post'
-        Credential = $SaltConnection.Credential
+        Credential = $global:SaltConnection.Credential
         Body = $requestBody
-        WebSession = $SaltConnection.WebSession
+        WebSession = $global:SaltConnection.WebSession
     }
 
     $powershellVersion = $PSVersionTable.PSVersion
@@ -85,7 +85,7 @@ function Invoke-SaltStackAPIMethod {
     }
 
     #kwarg is how to pass options to a method
-    if ($PSCmdlet.ShouldProcess($(([System.Uri]$SaltConnection.uri).Host) , "The following RPC API resource and method will be invoked: $Resource\$Method"))
+    if ($PSCmdlet.ShouldProcess($(([System.Uri]$global:SaltConnection.uri).Host) , "The following RPC API resource and method will be invoked: $Resource\$Method"))
     {
         try {
             $return = Invoke-RestMethod @invokeRestMethodProps

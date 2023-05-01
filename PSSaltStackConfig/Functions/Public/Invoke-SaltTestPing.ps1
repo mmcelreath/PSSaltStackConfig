@@ -75,7 +75,7 @@ function Invoke-SaltTestPing {
         tgt = $tgt
     }
     
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource cmd -Method route_cmd -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource cmd -Method route_cmd -Arguments $arguments
 
     if ($return.error) {
         $errorDetail = $return.error.detail.state
@@ -91,12 +91,12 @@ function Invoke-SaltTestPing {
         # Return the JobID associated with this job and exit
         Write-Output $return.ret
     } else {
-        $waitResult = Wait-SaltJob -SaltConnection $SaltConnection -JobID $jobId -Timeout $Timeout
+        $waitResult = Wait-SaltJob -SaltConnection $global:SaltConnection -JobID $jobId -Timeout $Timeout
         $waitJobID = $waitResult.JID
 
         $output = @()
 
-        $jobStatus = Get-SaltJobStatus -SaltConnection $SaltConnection -JobID $waitJobID
+        $jobStatus = Get-SaltJobStatus -SaltConnection $global:SaltConnection -JobID $waitJobID
 
         foreach ($detail in $jobStatus.MinionDetails) {
             $results = [PSCustomObject]@{

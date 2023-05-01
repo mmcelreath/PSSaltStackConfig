@@ -36,7 +36,7 @@ function Get-SaltJobResults {
         jid = $JobID
     }
     
-    $jobResults = Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource ret -Method get_jid -Arguments $arguments
+    $jobResults = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource ret -Method get_jid -Arguments $arguments
     
     $properties = $jobResults.ret.PSObject.Properties | Where-Object MemberType -eq 'NoteProperty' | Select-Object -ExpandProperty Name
     

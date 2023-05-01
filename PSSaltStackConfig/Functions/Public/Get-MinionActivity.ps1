@@ -4,23 +4,23 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to query the get_returns method on the ret resource to return Activities.
 .EXAMPLE
-    Get-MinionActivity -SaltConnection $SaltConnection
+    Get-MinionActivity 
 
     This will return the 50 most recent activities in SaltStack Config. 50 is the default limit. 
 .EXAMPLE
-    Get-MinionActivity -SaltConnection $SaltConnection -Limit 150
+    Get-MinionActivity -Limit 150
 
     This will return the 150 most recent activities in SaltStack Config by changing Limit to 150.
 .EXAMPLE
-    Get-MinionActivity -SaltConnection $SaltConnection -MinionID 'minionname'
+    Get-MinionActivity -MinionID 'minionname'
 
     This will return the 50 most recent activities for the MinionID provided
 .EXAMPLE
-    Get-MinionActivity -SaltConnection $SaltConnection -MinionID 'minionname' -JobID '20210204178834112766'
+    Get-MinionActivity -MinionID 'minionname' -JobID '20210204178834112766'
 
     This will return the activity in JobId 20210204570834112766 for the provided MinionID
 .EXAMPLE
-    Get-MinionActivity -SaltConnection $SaltConnection -Function state.apply
+    Get-MinionActivity -Function state.apply
 
     This will return the 50 most recent activities in SaltStack Config that us the function state.apply.
 .OUTPUTS
@@ -91,7 +91,7 @@ function Get-MinionActivity {
         $arguments.Add('has_errors','true')
     }
     
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource ret -Method get_returns -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource ret -Method get_returns -Arguments $arguments
 
     $results = $return.ret.results 
 

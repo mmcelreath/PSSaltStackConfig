@@ -44,26 +44,26 @@ function Invoke-SaltComplianceReport {
         return
     } 
 
-    $jobid = Invoke-SaltState -SaltConnection $SaltConnection -TargetType $TargetType -Target $Target -State $State -Exclude $Exclude
+    $jobid = Invoke-SaltState -SaltConnection $global:SaltConnection -TargetType $TargetType -Target $Target -State $State -Exclude $Exclude
 
     $i = 0
 
     while ($i -le 60) {
-        $status = Get-SaltJobStatus -SaltConnection $SaltConnection -JobID $jobid
+        $status = Get-SaltJobStatus -SaltConnection $global:SaltConnection -JobID $jobid
 
         if ($status.JobStatus -ne 'not-found') {
             break
         } else {
             Start-Sleep -s 5
-            $status = Get-SaltJobStatus -SaltConnection $SaltConnection -JobID $jobid
+            $status = Get-SaltJobStatus -SaltConnection $global:SaltConnection -JobID $jobid
         }
         
         $i++
     }
     
-    $jobStatus = Wait-SaltJob -SaltConnection $SaltConnection -JobID $jobId -Timeout $Timeout
+    $jobStatus = Wait-SaltJob -SaltConnection $global:SaltConnection -JobID $jobId -Timeout $Timeout
 
-    $minions = Get-SaltJobResults -SaltConnection $SaltConnection -JobID $jobid
+    $minions = Get-SaltJobResults -SaltConnection $global:SaltConnection -JobID $jobid
 
     $results = @()
 

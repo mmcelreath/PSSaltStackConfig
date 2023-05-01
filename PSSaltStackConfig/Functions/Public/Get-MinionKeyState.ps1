@@ -4,15 +4,15 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to query the get_minion_key_state method on the minions resource to return a minion's key state.
 .EXAMPLE
-    Get-MinionKeyState -SaltConnection $SaltConnection -MinionID 'minionname.domain.local'
+    Get-MinionKeyState -MinionID 'minionname.domain.local'
 
     This will return the key state of a minion id.
 .EXAMPLE
-    Get-MinionKeyState -SaltConnection $SaltConnection -MinionID 'minionname.domain.local' -KeyState accepted
+    Get-MinionKeyState -MinionID 'minionname.domain.local' -KeyState accepted
 
     This will return minion key state of a minion if it is in the "accepted" state. Otherwise, the return will be empty.
 .EXAMPLE
-    Get-MinionKeyState -SaltConnection $SaltConnection -KeyState pending
+    Get-MinionKeyState -KeyState pending
 
     This will return minion key states that are "pending".
 .OUTPUTS
@@ -24,10 +24,6 @@
 function Get-MinionKeyState {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         # MinionID
         [String]
         $MinionID,
@@ -62,7 +58,7 @@ function Get-MinionKeyState {
         $arguments.Add('key_state',$KeyState)
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource minions -Method get_minion_key_state -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource minions -Method get_minion_key_state -Arguments $arguments
 
     if ($return.error) {
         $errorDetail = $return.error.detail.state

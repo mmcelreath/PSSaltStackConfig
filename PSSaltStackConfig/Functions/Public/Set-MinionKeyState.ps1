@@ -44,7 +44,7 @@ function Set-MinionKeyState {
         'minions' = @(, @($Master, "$MinionID"))
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource minions -Method set_minion_key_state -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource minions -Method set_minion_key_state -Arguments $arguments
 
     if ($return.error) {
         $errorDetail = $return.error.detail.state

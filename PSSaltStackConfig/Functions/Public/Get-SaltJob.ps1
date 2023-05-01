@@ -66,7 +66,7 @@ function Get-SaltJob {
         $arguments.Add('job_uuid',$UUID)
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource job -Method get_jobs -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource job -Method get_jobs -Arguments $arguments
 
     if ($return.error) {
         $errorDetail = $return.error.detail.state

@@ -43,7 +43,7 @@ function Wait-SaltJob {
     $Timeout = $Timeout / 3
 
     # Getting Job Status
-    $returnStatus = Get-SaltJobStatus -SaltConnection $SaltConnection -JobID $JobID
+    $returnStatus = Get-SaltJobStatus -SaltConnection $global:SaltConnection -JobID $JobID
     $jobStatus = $returnStatus.JobStatus
 
     # Wait for the job to be created
@@ -55,7 +55,7 @@ function Wait-SaltJob {
         } else {
             # Write-Host $jobStatus
             Start-Sleep -Seconds 3
-            $returnStatus = Get-SaltJobStatus -SaltConnection $SaltConnection -JobID $JobID
+            $returnStatus = Get-SaltJobStatus -SaltConnection $global:SaltConnection -JobID $JobID
             $jobStatus = $returnStatus.JobStatus
 
             $i++
@@ -77,14 +77,14 @@ function Wait-SaltJob {
         } else {
             # Write-Host $returnStatus.State
             Start-Sleep -Seconds 3
-            $returnStatus = Get-SaltJobStatus -SaltConnection $SaltConnection -JobID $JobID
+            $returnStatus = Get-SaltJobStatus -SaltConnection $global:SaltConnection -JobID $JobID
 
             $i++
         }
 
     }
 
-    $returnStatus = Get-SaltJobStatus -SaltConnection $SaltConnection -JobID $JobID
+    $returnStatus = Get-SaltJobStatus -SaltConnection $global:SaltConnection -JobID $JobID
 
     Write-Output -InputObject $returnStatus
 
