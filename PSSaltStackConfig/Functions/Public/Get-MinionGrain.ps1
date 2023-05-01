@@ -55,7 +55,7 @@ function Get-MinionGrain {
     $array = @()
 
     if ($TargetType -eq 'glob') {
-        $minionKeyState = Get-MinionKeyState -SaltConnection $global:SaltConnection -MinionID $Target
+        $minionKeyState = Get-MinionKeyState -MinionID $Target
 
         if ($minionKeyState.key_state -ne 'accepted') {
             Write-Error "The key for $Target is not currently accepted or it doesn't exist."
@@ -92,7 +92,7 @@ function Get-MinionGrain {
         $arguments.Add('arg', $arg)
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource cmd -Method route_cmd -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -Resource cmd -Method route_cmd -Arguments $arguments
 
     $jobID = $return.ret
 
@@ -105,8 +105,8 @@ function Get-MinionGrain {
             Write-Output $return
         } else {
             Start-Sleep -Seconds 15
-            Wait-SaltJob -SaltConnection $global:SaltConnection -JobID $jobid -Timeout $Timeout | Out-Null
-            $results = Get-SaltJobResults -SaltConnection $global:SaltConnection -JobID $jobID
+            Wait-SaltJob -JobID $jobid -Timeout $Timeout | Out-Null
+            $results = Get-SaltJobResults -JobID $jobID
             Write-Output $results
         }
     }
