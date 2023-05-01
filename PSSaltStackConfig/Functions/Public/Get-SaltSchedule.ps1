@@ -4,19 +4,19 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the get method on the schedule resource to return a list of Schedules.
 .EXAMPLE
-    Get-SaltSchedule -SaltConnection $SaltConnection
+    Get-SaltSchedule
 
     This will return all Schedules with a default limit of 200.
 .EXAMPLE
-    Get-SaltSchedule -SaltConnection $SaltConnection -Name AppServer
+    Get-SaltSchedule -Name AppServer
 
     This will return Schedules matching the name provided. This is a wildcard match so anything wtih AppServer in the name wil be returned.
 .EXAMPLE
-    Get-SaltSchedule -SaltConnection $SaltConnection -UUID '3e396a37-020c-4756-9953-2p3e1f466b87'
+    Get-SaltSchedule -UUID '3e396a37-020c-4756-9953-2p3e1f466b87'
 
     This will return a Schedule matching the UUID provided.
 .EXAMPLE
-    Get-SaltSchedule -SaltConnection $SaltConnection -Name AppServer -ExactMatch
+    Get-SaltSchedule -Name AppServer -ExactMatch
 
     This will return a Target matching the exact name provided.
 .OUTPUTS
@@ -28,12 +28,6 @@
 function Get-SaltSchedule {
     [CmdletBinding(SupportsShouldProcess = $true,DefaultParameterSetName = 'Name')]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [Parameter(ParameterSetName = 'Name')]
-        [Parameter(ParameterSetName = 'UUID')]
-        [SaltConnection]
-        $SaltConnection,
         # Name
         [Parameter(ParameterSetName = 'Name')]
         [Array]

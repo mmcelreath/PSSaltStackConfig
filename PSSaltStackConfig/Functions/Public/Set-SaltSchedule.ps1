@@ -4,11 +4,11 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the update method on the schedule resource to update a Schedule.
 .EXAMPLE
-    Set-SaltSchedule -SaltConnection $SaltConnection -Name ScheduleA -NewName ScheduleB
+    Set-SaltSchedule -Name ScheduleA -NewName ScheduleB
 
     This will rename the schedule "ScheduleA" to the new name of "ShceduleB".
 .EXAMPLE
-    Set-SaltSchedule -SaltConnection $SaltConnection -Name ScheduleA -TargetName TestServers
+    Set-SaltSchedule -Name ScheduleA -TargetName TestServers
 
     This will update ScheduleA to target the TestServes Target Group.
 .OUTPUTS
@@ -20,12 +20,6 @@
 function Set-SaltSchedule {
     [CmdletBinding(SupportsShouldProcess = $true,DefaultParameterSetName = 'Name')]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [Parameter(ParameterSetName = 'Name')]
-        [Parameter(ParameterSetName = 'UUID')]
-        [SaltConnection]
-        $SaltConnection,
         # Name
         [Parameter(ParameterSetName = 'Name')]
         [String]

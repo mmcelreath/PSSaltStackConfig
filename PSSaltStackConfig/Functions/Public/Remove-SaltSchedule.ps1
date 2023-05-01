@@ -4,11 +4,11 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the remove method on the schedule resource to return a list of Schedules.
 .EXAMPLE
-    Remove-SaltSchedule -SaltConnection $SaltConnection -Name ScheduleA
+    Remove-SaltSchedule -Name ScheduleA
 
     This will remove the Schedule ScheduleA using it's name.
 .EXAMPLE
-    Remove-SaltSchedule -SaltConnection $SaltConnection -UUID e33ef27b-8a29-45c1-972c-c2a5f5472a29
+    Remove-SaltSchedule -UUID e33ef27b-8a29-45c1-972c-c2a5f5472a29
 
     This will remove the Schedule with the UUID e33ef27b-8a29-45c1-972c-c2a5f5472a29.
 .OUTPUTS
@@ -20,12 +20,6 @@
 function Remove-SaltSchedule {
     [CmdletBinding(SupportsShouldProcess = $true,DefaultParameterSetName = 'Name')]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [Parameter(ParameterSetName = 'Name')]
-        [Parameter(ParameterSetName = 'UUID')]
-        [SaltConnection]
-        $SaltConnection,
         # Name
         [Parameter(ParameterSetName = 'Name')]
         [String]

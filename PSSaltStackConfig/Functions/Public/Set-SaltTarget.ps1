@@ -4,19 +4,19 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the save_target_group on the tgt resource to update an existing Target group.
 .EXAMPLE
-    Set-SaltTarget -SaltConnection $SaltConnection -UUID 5a822264-839d-4bed-8fv5-0394c4q29598 -Description "New Description"
+    Set-SaltTarget -UUID 5a822264-839d-4bed-8fv5-0394c4q29598 -Description "New Description"
 
     This will update the Target Group wtih the specified UUID with the new description.
 .EXAMPLE
-    Set-SaltTarget -SaltConnection $SaltConnection -Name AppServers -NewName WindowsAppServers
+    Set-SaltTarget -Name AppServers -NewName WindowsAppServers
 
     This will update the Target Group wtih the specified Name with the NewName specified.
 .EXAMPLE
-    Set-SaltTarget -SaltConnection $SaltConnection -Name AppServers -TargetMasterID '*'
+    Set-SaltTarget -Name AppServers -TargetMasterID '*'
 
     This will update the Target Group wtih the specified Name to use All Masters.
 .EXAMPLE
-    Set-SaltTarget -SaltConnection $SaltConnection -Name AppServers -TargetType 'compound' -TargetString 'G@environment:Dev and G@role:AppServer'
+    Set-SaltTarget -Name AppServers -TargetType 'compound' -TargetString 'G@environment:Dev and G@role:AppServer'
 
     This will update the Target String and Target Type for the Target Group wtih the specified Name.
 .OUTPUTS
@@ -28,10 +28,6 @@
 function Set-SaltTarget {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         # Name
         [String]
         $Name,

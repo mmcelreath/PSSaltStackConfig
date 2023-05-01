@@ -4,19 +4,19 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the get_target_group on the tgt resource to return a list of targets.
 .EXAMPLE
-    Get-SaltTarget -SaltConnection $SaltConnection
+    Get-SaltTarget
 
     This will return all Targets with a default limit of 200.
 .EXAMPLE
-    Get-SaltTarget -SaltConnection $SaltConnection -Name AppServer
+    Get-SaltTarget -Name AppServer
 
     This will return Targets matching the name provided. This is a wildcard match so anything wtih AppServer in the name wil be returned.
 .EXAMPLE
-    Get-SaltTarget -SaltConnection $SaltConnection -Name AppServer -ExactMatch
+    Get-SaltTarget -Name AppServer -ExactMatch
 
     This will return a Target matching the exact name provided.
 .EXAMPLE
-    Get-SaltTarget -SaltConnection $SaltConnection -UUID '3e396a32-020c-4756-9953-253e1f466b87'
+    Get-SaltTarget -UUID '3e396a32-020c-4756-9953-253e1f466b87'
 
     This will return a Target matching the UUID provided.
 .OUTPUTS
@@ -28,10 +28,6 @@
 function Get-SaltTarget {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         # Name
         [String]
         $Name,

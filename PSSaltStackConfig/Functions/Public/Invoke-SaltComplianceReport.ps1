@@ -14,10 +14,6 @@
 function Invoke-SaltComplianceReport {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         # Target
         [Parameter(Mandatory = $true)]
         [String]

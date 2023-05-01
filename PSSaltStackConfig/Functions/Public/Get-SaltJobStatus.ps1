@@ -4,7 +4,7 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the get_cmd_status, get_cmd_details and get_cmds methods on the cmd resource to get the status of a Salt job.
 .EXAMPLE
-    Get-SaltJobStatus -SaltConnection $SaltConnection -JobID $JobID
+    Get-SaltJobStatus -JobID $JobID
 
     This will return the status of $JobID.
 .OUTPUTS
@@ -16,10 +16,6 @@
 function Get-SaltJobStatus {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         # JobID
         [Parameter(Mandatory = $true)]
         [String]

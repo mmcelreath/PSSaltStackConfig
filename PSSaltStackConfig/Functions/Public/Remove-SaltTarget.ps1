@@ -4,11 +4,11 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the remove method on the tgt resource to return a list of Targets.
 .EXAMPLE
-    Remove-SaltTarget -SaltConnection $SaltConnection -Name TargetA
+    Remove-SaltTarget -Name TargetA
 
     This will remove the Schedule TargetA using it's name.
 .EXAMPLE
-    Remove-SaltTarget -SaltConnection $SaltConnection -UUID e33ef27b-8a29-45c1-972c-c2a5f5472a29
+    Remove-SaltTarget -UUID e33ef27b-8a29-45c1-972c-c2a5f5472a29
 
     This will remove the Target with the UUID e33ef27b-8a29-45c1-972c-c2a5f5472a29.
 .OUTPUTS
@@ -20,12 +20,6 @@
 function Remove-SaltTarget {
     [CmdletBinding(SupportsShouldProcess = $true,DefaultParameterSetName = 'Name')]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [Parameter(ParameterSetName = 'Name')]
-        [Parameter(ParameterSetName = 'UUID')]
-        [SaltConnection]
-        $SaltConnection,
         # Name
         [Parameter(ParameterSetName = 'Name')]
         [String]

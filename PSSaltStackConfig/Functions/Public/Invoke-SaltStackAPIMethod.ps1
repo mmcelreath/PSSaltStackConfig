@@ -4,23 +4,23 @@
 .DESCRIPTION
     This function will hit an endpoint and method on the SaltStack Config Servers HTTP bridge.  The HTTP bridge is a REST wrapper for the RPC API.
 .EXAMPLE
-    Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource api -Method get_versions
+    Invoke-SaltStackAPIMethod -Resource api -Method get_versions
 
     This will return all versions of the SaltStack Config server.
 .EXAMPLE
-    Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource minions -Method get_minion_key_state -Arguments @{'limit'=300}
+    Invoke-SaltStackAPIMethod -Resource minions -Method get_minion_key_state -Arguments @{'limit'=300}
 
     This will return minion key states and return 300 instead of truncating the response.
 .EXAMPLE
-    Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource minions -Method get_minion_key_state -Arguments @{'limit'=300; 'master_id'='master'; 'key_state'='pending'}
+    Invoke-SaltStackAPIMethod -Resource minions -Method get_minion_key_state -Arguments @{'limit'=300; 'master_id'='master'; 'key_state'='pending'}
 
     This will return minion key states from the 'master' master which have a 'pending' key state and will return up to 300 minions.
 .EXAMPLE
-    Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource minions -Method set_minion_key_state -Arguments @{'state'='accept'; 'minions' = @(,@('master', 'minionname.domain.local'))}
+    Invoke-SaltStackAPIMethod -Resource minions -Method set_minion_key_state -Arguments @{'state'='accept'; 'minions' = @(,@('master', 'minionname.domain.local'))}
 
     This will accept a minion key for 'minionname.domain.local' on the master 'master'.
 .EXAMPLE
-    Invoke-SaltStackAPIMethod -SaltConnection $SaltConnection -Resource minions -Method set_minion_key_state -Arguments @{'state'='accept'; 'minions' = @(@('master', 'minion1.domain.local'),@('master', 'minion2.domain.local'))}
+    Invoke-SaltStackAPIMethod -Resource minions -Method set_minion_key_state -Arguments @{'state'='accept'; 'minions' = @(@('master', 'minion1.domain.local'),@('master', 'minion2.domain.local'))}
 
     This will accept a minion keys for 'minion1.domain.local' and 'minion2.domain.local' on the master 'master'.
 .OUTPUTS
@@ -32,10 +32,6 @@
 function Invoke-SaltStackAPIMethod {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         # Resource
         [Parameter(Mandatory = $true)]
         [String]

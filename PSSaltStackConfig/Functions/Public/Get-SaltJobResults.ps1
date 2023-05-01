@@ -4,7 +4,7 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the get_jid on the cmd resource to return the detailed results of a Salt job.
 .EXAMPLE
-    Get-SaltJobResults -SaltConnection $SaltConnection -JobID $JobID
+    Get-SaltJobResults -JobID $JobID
 
     This will return the detailed results of $JobID.
 .OUTPUTS
@@ -16,10 +16,6 @@
 function Get-SaltJobResults {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         # JobID
         [Parameter(Mandatory = $true)]
         [String]

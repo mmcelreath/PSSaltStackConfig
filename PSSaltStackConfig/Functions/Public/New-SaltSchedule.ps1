@@ -4,11 +4,11 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the save method on the schedule resource to create a Schedule.
 .EXAMPLE
-    New-SaltSchedule -SaltConnection $SaltConnection -Name ScheduleA -TargetName TestServers -JobName test.ping -StartDate (Get-Date).AddMinutes(5) -IntervalUnits 5 -IntervalUnitType hours
+    New-SaltSchedule -Name ScheduleA -TargetName TestServers -JobName test.ping -StartDate (Get-Date).AddMinutes(5) -IntervalUnits 5 -IntervalUnitType hours
 
     This will create a schedule named "ScheduleA" which will run the test.ping job targeting the TestServers target group starting 5 minutes after the current date and time which will run every 5 hours.
 .EXAMPLE
-    New-SaltSchedule -SaltConnection $SaltConnection -Name ScheduleA -TargetName TestServers -JobName test.ping -StartDate "11/16/2020 9:50" -IntervalUnits 5 -IntervalUnitType hours
+    New-SaltSchedule -Name ScheduleA -TargetName TestServers -JobName test.ping -StartDate "11/16/2020 9:50" -IntervalUnits 5 -IntervalUnitType hours
 
     This will create a schedule named "ScheduleA" which will run the test.ping job targeting the TestServers target group starting on a specific date/time which will run every 5 hours.
 .OUTPUTS
@@ -20,10 +20,6 @@
 function New-SaltSchedule {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         [Parameter(Mandatory = $true)]
         [String]
         $Name,

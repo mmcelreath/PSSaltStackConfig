@@ -4,11 +4,11 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the save_target_group on the tgt resource to create a new Target group.
 .EXAMPLE
-    New-SaltTarget -SaltConnection $SaltConnection -Name AppServers -TargetType 'compound' -TargetString 'G@environment:Dev and G@role:AppServer' -TargetMasterID '*'
+    New-SaltTarget -Name AppServers -TargetType 'compound' -TargetString 'G@environment:Dev and G@role:AppServer' -TargetMasterID '*'
 
     This will create a Target Group wtih the specified Name usig a 'compound' TargetString.
 .EXAMPLE
-    New-SaltTarget -SaltConnection $SaltConnection -Name AppServers -TargetType 'grain' -TargetString 'GrainName:grain_value' -TargetMasterID '*'
+    New-SaltTarget -Name AppServers -TargetType 'grain' -TargetString 'GrainName:grain_value' -TargetMasterID '*'
 
     This will create a Target Group wtih the specified Name usig a 'grain' as its target.
 .OUTPUTS
@@ -20,10 +20,6 @@
 function New-SaltTarget {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         # Name
         [Parameter(Mandatory = $true)]
         [String]

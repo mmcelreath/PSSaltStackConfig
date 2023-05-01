@@ -4,7 +4,7 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the set_minion_key_state method on the minions resource to set a minion's key state.
 .EXAMPLE
-    Set-MinionKeyState -SaltConnection $SaltConnection -MinionID 'minionname.domain.local' -KeyState accept
+    Set-MinionKeyState -MinionID 'minionname.domain.local' -KeyState accept
 
     This will accept the key for the specified minion if the key is currently pending.
 .OUTPUTS
@@ -16,10 +16,6 @@
 function Set-MinionKeyState {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         [String]
         $Master,
         # MinionID

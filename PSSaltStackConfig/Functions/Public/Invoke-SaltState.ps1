@@ -4,20 +4,20 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the route_cmd method on the cmd resource to run a state.apply against a target.
 .EXAMPLE
-    Invoke-SaltState -SaltConnection $SaltConnection -Target computername -State webserver
+    Invoke-SaltState -Target computername -State webserver
 
     This will run the webserver state file against computername.
 .EXAMPLE
-    Invoke-SaltState -SaltConnection $SaltConnection -Target computername -State webserver -Test
+    Invoke-SaltState -Target computername -State webserver -Test
 
     This will initiate a test run the webserver state file against computername.
 .EXAMPLE
-    Invoke-SaltState -SaltConnection $SaltConnection -Target computername -State highstate -Exclude 'psreposetup,set_psversion_grain'
+    Invoke-SaltState -Target computername -State highstate -Exclude 'psreposetup,set_psversion_grain'
 
     This will run a highstate against computername, excluding the psreposetup and set_psversion_grain states. The Exclude parameter should be a 
     comma separated string.
 .EXAMPLE
-    Invoke-SaltState -SaltConnection $SaltConnection -Target 'G@webserver:true' -TargetType compound -State highstate 
+    Invoke-SaltState -Target 'G@webserver:true' -TargetType compound -State highstate 
 
     This will run a highstate against the compound target where the webserver grain is set to true.
 .OUTPUTS
@@ -29,10 +29,6 @@
 function Invoke-SaltState {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         # Target
         [Parameter(Mandatory = $true)]
         [String]

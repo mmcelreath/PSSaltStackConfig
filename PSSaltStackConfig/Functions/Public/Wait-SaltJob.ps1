@@ -4,11 +4,11 @@
 .DESCRIPTION
     This function will use Get-SaltJobStatus and wait until the job completes. Once the job is completed, this functions will return the job's status information.
 .EXAMPLE
-    Wait-SaltJob -SaltConnection $SaltConnection -JobID $JobId
+    Wait-SaltJob -JobID $JobId
 
     This will query the SaltStack Config API and wait for $JobID to complete.
 .EXAMPLE
-    Wait-SaltJob -SaltConnection $SaltConnection -JobID $JobId -Timeout 500
+    Wait-SaltJob -JobID $JobId -Timeout 500
 
     This will query the SaltStack Config API and wait for $JobID to complete with a timeout of 500 seconds (300 is the default value if omitted)
 .OUTPUTS
@@ -20,10 +20,6 @@
 function Wait-SaltJob {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         # JobID
         [Parameter(Mandatory = $true)]
         [String]

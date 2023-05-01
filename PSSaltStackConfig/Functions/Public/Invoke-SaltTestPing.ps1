@@ -4,19 +4,19 @@
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the route_cmd method on the cmd resource to run a test.ping against a target.
 .EXAMPLE
-    Invoke-SaltTestPing -SaltConnection $SaltConnection -Target 'web01'
+    Invoke-SaltTestPing -Target 'web01'
 
     This will initiate a Test.Ping against web01.
 .EXAMPLE
-    Invoke-SaltTestPing -SaltConnection $SaltConnection -Target 'web*'
+    Invoke-SaltTestPing -Target 'web*'
 
     This will initiate a Test.Ping against all minions that begin with web.
 .EXAMPLE
-    Invoke-SaltTestPing -SaltConnection $SaltConnection -Target 'G@id:web*' -TargetType compound
+    Invoke-SaltTestPing -Target 'G@id:web*' -TargetType compound
 
     This will initiate a Test.Ping against all minions matching the compound Target.
 .EXAMPLE
-    Invoke-SaltTestPing -SaltConnection $SaltConnection -Target 'G@id:web*' -TargetType compound -Async
+    Invoke-SaltTestPing -Target 'G@id:web*' -TargetType compound -Async
 
     This will asynchronously initiate a Test.Ping against all minions matching the compound Target. The Salt JobID will be returned.
 .OUTPUTS
@@ -28,10 +28,6 @@
 function Invoke-SaltTestPing {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         # Target
         [Parameter(Mandatory = $true)]
         [String]
