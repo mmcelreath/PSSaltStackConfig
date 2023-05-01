@@ -49,6 +49,7 @@ function Connect-SaltStackConfig {
             'Authorization' = "Basic $base64AuthInfo"
         }
 
+        # Create global variable $SaltConnection to be used by the rest of the functions in this module
         New-Variable -Name SaltConnection -Visibility Public -Option ReadOnly -Scope Global -Force -Value ([SaltConnection]::new(
             $endpointAuth.ToString(),
             $endpointAPI.ToString(),
