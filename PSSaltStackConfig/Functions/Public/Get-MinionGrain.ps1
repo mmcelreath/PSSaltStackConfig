@@ -37,7 +37,7 @@ function Get-MinionGrain {
         [String]
         $Grain,
         [String]
-        $Master,
+        $Master = '*', # Default to '*' for "All Masters". To do: add ability to pass multiple masters
         [Int]
         $Timeout = 300,
         [Switch]
