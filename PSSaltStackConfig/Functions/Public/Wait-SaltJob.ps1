@@ -33,6 +33,12 @@ function Wait-SaltJob {
         $Timeout = 300
     )
 
+    # Check to see if there is an existing connection to SaltStack
+    if (!$global:SaltConnection) {
+        Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
+        return
+    } 
+
     # Convert Timeout seconds for while loop
     $Timeout = $Timeout / 3
 

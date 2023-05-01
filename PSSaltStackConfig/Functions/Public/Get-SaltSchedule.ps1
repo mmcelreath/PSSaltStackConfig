@@ -51,6 +51,12 @@ function Get-SaltSchedule {
         [Int]
         $Limit = 200
     )
+    
+    # Check to see if there is an existing connection to SaltStack
+    if (!$global:SaltConnection) {
+        Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
+        return
+    } 
 
     $arguments = @{
         limit = $limit

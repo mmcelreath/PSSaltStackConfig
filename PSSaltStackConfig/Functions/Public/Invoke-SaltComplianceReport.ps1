@@ -38,6 +38,12 @@ function Invoke-SaltComplianceReport {
         $Timeout = 500
     )
 
+    # Check to see if there is an existing connection to SaltStack
+    if (!$global:SaltConnection) {
+        Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
+        return
+    } 
+
     $jobid = Invoke-SaltState -SaltConnection $SaltConnection -TargetType $TargetType -Target $Target -State $State -Exclude $Exclude
 
     $i = 0

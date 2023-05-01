@@ -56,6 +56,12 @@ function Set-SaltTarget {
         $TargetMasterID
     )
 
+    # Check to see if there is an existing connection to SaltStack
+    if (!$global:SaltConnection) {
+        Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
+        return
+    } 
+
     if ($TargetType -or $TargetString) {
         if (!($TargetType -and $TargetString)) {
             throw "If TargetType or TargetString is being updated, both need to be specified when modifying the target with this function."

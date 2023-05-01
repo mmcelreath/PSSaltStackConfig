@@ -50,6 +50,12 @@ function Invoke-SaltTestPing {
         $Async
     )
 
+    # Check to see if there is an existing connection to SaltStack
+    if (!$global:SaltConnection) {
+        Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
+        return
+    } 
+
     # Needs to be all lowercase
     $TargetType = $TargetType.ToLower()
 

@@ -50,6 +50,12 @@ function Invoke-SaltStackAPIMethod {
         $Arguments
     )
 
+    # Check to see if there is an existing connection to SaltStack
+    if (!$global:SaltConnection) {
+        Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
+        return
+    } 
+
     # $resource should be in the form of '<resource>.<method>'.
     # For example 'admin.trim_database' or 'api.get_versions'
     $requestBodyHash = @{

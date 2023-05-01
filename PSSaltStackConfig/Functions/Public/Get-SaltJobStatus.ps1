@@ -27,6 +27,12 @@ function Get-SaltJobStatus {
         
     )
 
+    # Check to see if there is an existing connection to SaltStack
+    if (!$global:SaltConnection) {
+        Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
+        return
+    } 
+
     # This is how many records to return at a time. The default is 50. We're setting it to 1,000. Often used with page
     # Will need to update these functions if the number of possible minions grows to over 1,000.
     $limit = 1000

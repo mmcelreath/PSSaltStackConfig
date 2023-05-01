@@ -32,10 +32,6 @@
 function Get-MinionActivity {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
-        # Salt connection object
-        [Parameter(Mandatory = $true)]
-        [SaltConnection]
-        $SaltConnection,
         # MinionID
         [String]
         $MinionID,
@@ -62,6 +58,12 @@ function Get-MinionActivity {
         # Start
         # End
     )
+
+    # Check to see if there is an existing connection to SaltStack
+    if (!$global:SaltConnection) {
+        Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
+        return
+    } 
 
     $arguments = @{}
 
