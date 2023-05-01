@@ -64,7 +64,7 @@ function Get-SaltSchedule {
         $arguments.Add('uuid',$UUID)
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource schedule -Method get -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -Resource schedule -Method get -Arguments $arguments
     
     if ($return.error) {
         $errorDetail = $return.error.detail.state

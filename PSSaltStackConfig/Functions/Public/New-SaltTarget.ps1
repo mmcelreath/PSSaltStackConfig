@@ -74,7 +74,7 @@ function New-SaltTarget {
         wait_for_match = $true
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource tgt -Method save_target_group -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -Resource tgt -Method save_target_group -Arguments $arguments
 
     Write-Output -InputObject $return
     

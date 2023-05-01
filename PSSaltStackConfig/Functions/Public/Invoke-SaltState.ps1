@@ -65,7 +65,7 @@ function Invoke-SaltState {
     $array = @()
 
     if ($TargetType -eq 'glob') {
-        $minionKeyState = Get-MinionKeyState -SaltConnection $global:SaltConnection -MinionID $Target
+        $minionKeyState = Get-MinionKeyState -MinionID $Target
 
         if ($minionKeyState.key_state -ne 'accepted') {
             Write-Error "The key for $Target is not currently accepted or it doesn't exist."
@@ -110,7 +110,7 @@ function Invoke-SaltState {
         arg = $arg
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource cmd -Method route_cmd -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -Resource cmd -Method route_cmd -Arguments $arguments
 
     if ($return.error) {
         $errorDetail = $return.error.detail.state

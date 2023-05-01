@@ -63,7 +63,7 @@ function Remove-SaltSchedule {
         uuid = $scheduleID
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource schedule -Method remove -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -Resource schedule -Method remove -Arguments $arguments
     
     if ($return.error) {
         $errorDetail = $return.error.detail.state

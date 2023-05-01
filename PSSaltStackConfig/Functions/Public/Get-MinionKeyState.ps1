@@ -58,7 +58,7 @@ function Get-MinionKeyState {
         $arguments.Add('key_state',$KeyState)
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource minions -Method get_minion_key_state -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -Resource minions -Method get_minion_key_state -Arguments $arguments
 
     if ($return.error) {
         $errorDetail = $return.error.detail.state

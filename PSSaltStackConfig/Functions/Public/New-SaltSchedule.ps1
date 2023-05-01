@@ -53,14 +53,14 @@ function New-SaltSchedule {
         return
     } 
 
-    $schedule = Get-SaltSchedule -SaltConnection $global:SaltConnection -Name $Name -ExactMatch
+    $schedule = Get-SaltSchedule -Name $Name -ExactMatch
 
     if ($schedule.Count -gt 0) {
         throw "Another Schedule exists already with the name: $Name"
     } 
 
-    $job = Get-SaltJob -SaltConnection $global:SaltConnection -Name $JobName -ExactMatch
-    $target = Get-SaltTarget -SaltConnection $global:SaltConnection -Name $TargetName -ExactMatch
+    $job = Get-SaltJob -Name $JobName -ExactMatch
+    $target = Get-SaltTarget -Name $TargetName -ExactMatch
 
     if ($job.Count -eq 0) {
         throw "No Jobs found with the name: $JobName"
@@ -100,7 +100,7 @@ function New-SaltSchedule {
         job_uuid = $jobID
     }
 
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource schedule -Method save -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -Resource schedule -Method save -Arguments $arguments
     
     if ($return.error) {
         $errorDetail = $return.error.detail.state

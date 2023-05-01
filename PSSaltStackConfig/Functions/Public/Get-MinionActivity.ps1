@@ -91,7 +91,7 @@ function Get-MinionActivity {
         $arguments.Add('has_errors','true')
     }
     
-    $return = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource ret -Method get_returns -Arguments $arguments
+    $return = Invoke-SaltStackAPIMethod -Resource ret -Method get_returns -Arguments $arguments
 
     $results = $return.ret.results 
 

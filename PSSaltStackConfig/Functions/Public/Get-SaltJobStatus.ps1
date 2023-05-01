@@ -42,7 +42,7 @@ function Get-SaltJobStatus {
         jids = $array
     }
 
-    $returnCmdStatus = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource cmd -Method get_cmd_status -Arguments $arguments
+    $returnCmdStatus = Invoke-SaltStackAPIMethod -Resource cmd -Method get_cmd_status -Arguments $arguments
 
     if ($returnCmdStatus.error) {
         $errorDetail = $returnCmdStatus.error.detail.state
@@ -61,7 +61,7 @@ function Get-SaltJobStatus {
         limit = $limit
     }
 
-    $returndCmdDetails = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource cmd -Method get_cmd_details -Arguments $arguments
+    $returndCmdDetails = Invoke-SaltStackAPIMethod -Resource cmd -Method get_cmd_details -Arguments $arguments
 
     if ($return.error) {
         $errorDetail = $returndCmdDetails.error.detail.state
@@ -80,7 +80,7 @@ function Get-SaltJobStatus {
         limit = $limit
     }
 
-    $returndCmd = Invoke-SaltStackAPIMethod -SaltConnection $global:SaltConnection -Resource cmd -Method get_cmds -Arguments $arguments
+    $returndCmd = Invoke-SaltStackAPIMethod -Resource cmd -Method get_cmds -Arguments $arguments
 
     if ($return.error) {
         $errorDetail = $returndCmd.error.detail.state
