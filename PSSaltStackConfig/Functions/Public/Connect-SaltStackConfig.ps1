@@ -5,7 +5,7 @@ function Connect-SaltStackConfig {
         [Parameter(Mandatory = $true, Position = 0, ParameterSetName = 'Credential')]
         [Parameter(Mandatory = $true, Position = 0, ParameterSetName = 'UseDefaultCredentials')]
         [String]
-        $SaltEnterpriseServer,
+        $SaltConfigServer,
 
         # PSCredential object for API access.
         [Parameter(Mandatory = $true, Position = 1, ParameterSetName = 'Credential')]
@@ -20,8 +20,8 @@ function Connect-SaltStackConfig {
 
     )
     process {
-        $endpointAuth = New-URI -HostName $SaltEnterpriseServer -ApiEndPoint '/account/login' -Scheme https
-        $endpointAPI = New-URI -HostName $SaltEnterpriseServer -ApiEndPoint '/rpc' -Scheme https
+        $endpointAuth = New-URI -HostName $SaltConfigServer -ApiEndPoint '/account/login' -Scheme https
+        $endpointAPI = New-URI -HostName $SaltConfigServer -ApiEndPoint '/rpc' -Scheme https
         
         $base64AuthInfo = [System.Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $($Credential.UserName),$($Credential.GetNetworkCredential().Password))))
 

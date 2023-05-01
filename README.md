@@ -17,7 +17,7 @@ A big thanks to [Ephos](https://github.com/ephos) for doing the inital dirty wor
 This module utilizes a global variable called $global:SaltConnection which stores the details of the connection to the SaltStack API. Running the following command will create the $global:SaltConnection in your current session:
 
 ```powershell
-Connect-SaltStackConfig -SaltEnterpriseServer <RAAS_Server> -Credential $credential
+Connect-SaltStackConfig -SaltConfigServer <RAAS_Server> -Credential $credential
 ```
 
 This global variable is utilized automatically by the rest of the functions without the need to pass it every time.
@@ -31,7 +31,7 @@ $credential = Get-Credential # User with API permissions
 
 # Connect to SaltStack Config using the provided credential
 # This command will create a Global variable called $global:SaltConnection which will be used for the rest of the functions in this module
-Connect-SaltStackConfig -SaltEnterpriseServer <RAAS_Server> -Credential $credential
+Connect-SaltStackConfig -SaltConfigServer <RAAS_Server> -Credential $credential
 
 Invoke-SaltTestPing -Target 'web01'
 
