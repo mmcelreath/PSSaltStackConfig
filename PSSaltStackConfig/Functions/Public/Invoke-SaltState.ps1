@@ -42,7 +42,7 @@ function Invoke-SaltState {
         [Validateset('glob','compound')] # To add: 'grain','list'
         $TargetType = 'glob',
         [String]
-        $Master,
+        $Master = '*',
         # Exclude
         [String]
         $Exclude,

@@ -17,7 +17,7 @@ function Set-MinionKeyState {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param (
         [String]
-        $Master,
+        $Master = '*',
         # MinionID
         [Parameter(Mandatory = $true)]
         [String]

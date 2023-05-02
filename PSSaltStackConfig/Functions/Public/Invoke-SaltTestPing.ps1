@@ -33,7 +33,7 @@ function Invoke-SaltTestPing {
         [String]
         $Target,
         [String]
-        $Master,
+        $Master = '*',
         # TargetType
         [String]
         [Validateset('glob','compound')] # To add: 'grain','list'
