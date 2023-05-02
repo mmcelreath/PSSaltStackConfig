@@ -41,9 +41,9 @@ Function Connect-SaltStackConfig {
         [Parameter(Mandatory=$true)]
         [PSCredential]
         $Credential,
-        [Parameter(Mandatory=$true)]
-        [Switch]
-        $SkipCertificateCheck,
+        # [Parameter(Mandatory=$true)]
+        # [Switch]
+        # $SkipCertificateCheck,
         [Parameter(Mandatory=$false)]
         [System.Net.SecurityProtocolType]
         $SslProtocol
@@ -52,21 +52,21 @@ Function Connect-SaltStackConfig {
     $username = $Credential.GetNetworkCredential().username
     $password = $Credential.GetNetworkCredential().password
 
-    if ($SkipCertificateCheck) {
-        # This if statement is using example code from https://stackoverflow.com/questions/11696944/powershell-v3-invoke-webrequest-https-error
-        add-type @"
-        using System.Net;
-        using System.Security.Cryptography.X509Certificates;
-        public class TrustAllCertsPolicy : ICertificatePolicy {
-            public bool CheckValidationResult(
-                ServicePoint srvPoint, X509Certificate certificate,
-                WebRequest request, int certificateProblem) {
-                return true;
-            }
-        }
-"@
-        [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
-    } # end if SkipCertificate Check
+#     if ($SkipCertificateCheck) {
+#         # This if statement is using example code from https://stackoverflow.com/questions/11696944/powershell-v3-invoke-webrequest-https-error
+#         add-type @"
+#         using System.Net;
+#         using System.Security.Cryptography.X509Certificates;
+#         public class TrustAllCertsPolicy : ICertificatePolicy {
+#             public bool CheckValidationResult(
+#                 ServicePoint srvPoint, X509Certificate certificate,
+#                 WebRequest request, int certificateProblem) {
+#                 return true;
+#             }
+#         }
+# "@
+#         [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+#     } # end if SkipCertificate Check
     
     if ($SslProtocol) {
         [System.Net.ServicePointManager]::SecurityProtocol = $SslProtocol
