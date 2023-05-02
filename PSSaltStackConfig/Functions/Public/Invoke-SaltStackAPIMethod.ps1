@@ -66,12 +66,10 @@ function Invoke-SaltStackAPIMethod {
     $requestBody = $requestBodyHash | ConvertTo-Json -Depth 10
 
     $invokeRestMethodProps = @{
-        Uri = $global:SaltConnection.APIURI
-        Headers= $global:SaltConnection.AuthHeader
+        Uri = "https://$($global:SaltConnection.Name)/rpc"
         Method = 'Post'
-        Credential = $global:SaltConnection.Credential
         Body = $requestBody
-        WebSession = $global:SaltConnection.WebSession
+        WebSession = $global:SaltConnection.SscWebSession
     }
 
     $powershellVersion = $PSVersionTable.PSVersion
