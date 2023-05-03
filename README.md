@@ -3,7 +3,7 @@
 # PSSaltStackConfig
 SaltStack Config API module providing function wrappers for the SaltStack API REST endpoints.
 
-This module started out as a project to give the ability to run some common commands against SaltStack Config using PowerShell. This module utilizes the API for the SaltStack RAAS service. Documentation for the API can be found at the following VMWare Docs page:
+This module started out as a project to give the ability to run some common commands against SaltStack Config using PowerShell. This module utilizes the API for the SaltStack RAAS service. Documentation for the API can be found at the following VMWare Docs pages:
 
 [Working with the API (RaaS)](https://docs.vmware.com/en/VMware-vRealize-Automation-SaltStack-Config/8.4/use-manage-saltstack-config/GUID-FF1A0E3A-CA19-4139-B9DC-C32DC4F76202.html)
 
