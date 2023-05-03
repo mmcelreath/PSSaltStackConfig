@@ -38,7 +38,7 @@ function Invoke-SaltComplianceReport {
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     $jobid = Invoke-SaltState -TargetType $TargetType -Target $Target -State $State -Exclude $Exclude
 
@@ -53,10 +53,10 @@ function Invoke-SaltComplianceReport {
             Start-Sleep -s 5
             $status = Get-SaltJobStatus -JobID $jobid
         }
-        
+
         $i++
     }
-    
+
     $jobStatus = Wait-SaltJob -JobID $jobId -Timeout $Timeout
 
     $minions = Get-SaltJobResults -JobID $jobid
@@ -64,7 +64,7 @@ function Invoke-SaltComplianceReport {
     $results = @()
 
     foreach ($minion in $minions) {
-        
+
         $notInDesiredState = ''
 
         if ($minion.Changed) {
@@ -82,7 +82,7 @@ function Invoke-SaltComplianceReport {
         } else {
             $notInDesiredState = 'NONE'
         }
-        
+
         $obj = [PSCustomObject]@{
             ComputerName = $minion.minionID
             Success = $minion.Success

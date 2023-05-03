@@ -46,7 +46,7 @@ function Get-SaltTarget {
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     $arguments = @{
         limit = $Limit
@@ -59,7 +59,7 @@ function Get-SaltTarget {
     if ($UUID) {
         $arguments.Add('tgt_uuid',$UUID)
     }
-    
+
     $return = Invoke-SaltStackAPIMethod -Resource tgt -Method get_target_group -Arguments $arguments
 
     if ($return.error) {
@@ -73,7 +73,7 @@ function Get-SaltTarget {
             $targets = $return.ret.results
         }
     }
-        
+
     Write-Output -InputObject $targets
 
 }

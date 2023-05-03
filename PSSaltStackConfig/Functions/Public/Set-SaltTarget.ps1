@@ -56,12 +56,12 @@ function Set-SaltTarget {
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     if ($TargetType -or $TargetString) {
         if (!($TargetType -and $TargetString)) {
             throw "If TargetType or TargetString is being updated, both need to be specified when modifying the target with this function."
-        }            
+        }
     }
 
     $splat = @{
@@ -81,11 +81,11 @@ function Set-SaltTarget {
 
     if ($target.Count -eq 0) {
         throw 'No Targets returned based on the information provided.'
-    } 
+    }
 
     if ($target.Count -gt 1) {
         throw 'More than one Target was returned based on the information provided.'
-    } 
+    }
 
     $arguments = @{
         tgt_uuid = $target.uuid
@@ -99,7 +99,7 @@ function Set-SaltTarget {
         if ($TargetMasterID) {
             $newTargetMasterID = $TargetMasterID
         } else {
-            $newTargetMasterID = $origTargetMasterID 
+            $newTargetMasterID = $origTargetMasterID
         }
 
         if ($TargetType) {
@@ -139,7 +139,7 @@ function Set-SaltTarget {
     }
 
     $return = Invoke-SaltStackAPIMethod -Resource tgt -Method save_target_group -Arguments $arguments
-    
+
     Write-Output -InputObject $return
-    
+
 }

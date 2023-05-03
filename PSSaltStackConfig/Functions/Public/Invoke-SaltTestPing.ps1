@@ -50,7 +50,7 @@ function Invoke-SaltTestPing {
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     # Needs to be all lowercase
     $TargetType = $TargetType.ToLower()
@@ -61,8 +61,8 @@ function Invoke-SaltTestPing {
         $tgtValue = $Target
     }
 
-    $tgt = @{ 
-        $Master = @{ tgt = $tgtValue; tgt_type = $TargetType} 
+    $tgt = @{
+        $Master = @{ tgt = $tgtValue; tgt_type = $TargetType}
     }
 
     $arguments = @{
@@ -70,7 +70,7 @@ function Invoke-SaltTestPing {
         fun = 'test.ping'
         tgt = $tgt
     }
-    
+
     $return = Invoke-SaltStackAPIMethod -Resource cmd -Method route_cmd -Arguments $arguments
 
     if ($return.error) {

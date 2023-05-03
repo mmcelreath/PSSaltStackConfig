@@ -3,7 +3,7 @@ class SaltConnection {
     [String]$APIURI
     [Microsoft.PowerShell.Commands.WebRequestSession]$WebSession
     [PSCredential] $Credential
-    [HashTable] $AuthHeader 
+    [HashTable] $AuthHeader
 
     SaltConnection(
         [String]$AuthURI,

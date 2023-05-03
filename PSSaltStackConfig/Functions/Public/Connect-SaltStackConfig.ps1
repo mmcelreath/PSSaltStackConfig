@@ -51,13 +51,13 @@ Function Connect-SaltStackConfig {
 
     $username = $Credential.GetNetworkCredential().username
     $password = $Credential.GetNetworkCredential().password
-    
+
     if ($SslProtocol) {
         [System.Net.ServicePointManager]::SecurityProtocol = $SslProtocol
     }
 
     $loginBody = @{'username'=$username; 'password'=$password; 'config_name'=$AuthSource}
-    
+
     try {
         $webSessionRequestParams = @{
             Uri                  = "https://$server/account/login"
@@ -78,8 +78,8 @@ Function Connect-SaltStackConfig {
 
         $webRequest = Invoke-WebRequest @webRequestParams
         $webRequestJson = ConvertFrom-JSON $webRequest.Content
-        
-        $global:SaltConnection = New-Object psobject -property @{ 'SscWebSession'=$WebSession; 'Name'=$server; 'ConnectionDetail'=$webRequestJson; 
+
+        $global:SaltConnection = New-Object psobject -property @{ 'SscWebSession'=$WebSession; 'Name'=$server; 'ConnectionDetail'=$webRequestJson;
         'User'=$webRequestJson.attributes.config_name +'\'+ $username; 'Authenticated'=$webRequestJson.authenticated; PSTypeName='SscConnection' }
     
         # Return the connection object

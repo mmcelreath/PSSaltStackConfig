@@ -14,10 +14,10 @@
 .EXAMPLE
     Invoke-SaltState -Target computername -State highstate -Exclude 'psreposetup,set_psversion_grain'
 
-    This will run a highstate against computername, excluding the psreposetup and set_psversion_grain states. The Exclude parameter should be a 
+    This will run a highstate against computername, excluding the psreposetup and set_psversion_grain states. The Exclude parameter should be a
     comma separated string.
 .EXAMPLE
-    Invoke-SaltState -Target 'G@webserver:true' -TargetType compound -State highstate 
+    Invoke-SaltState -Target 'G@webserver:true' -TargetType compound -State highstate
 
     This will run a highstate against the compound target where the webserver grain is set to true.
 .OUTPUTS
@@ -48,17 +48,14 @@ function Invoke-SaltState {
         $Exclude,
         # Test
         [Switch]
-        $Test,
-        # Timeout
-        [Int]
-        $Timeout = 300
+        $Test
     )
 
     # Check to see if there is an existing connection to SaltStack
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     # Needs to be all lowercase
     $TargetType = $TargetType.ToLower()
@@ -70,7 +67,7 @@ function Invoke-SaltState {
         if ($minionKeyState.key_state -ne 'accepted') {
             Write-Error "The key for $Target is not currently accepted or it doesn't exist."
         }
-        
+
         $tgtValue = $minionKeyState.minion
     }
 
@@ -78,8 +75,8 @@ function Invoke-SaltState {
         $tgtValue = $Target
     }
 
-    $tgt = @{ 
-        $Master = @{ tgt = $tgtValue; tgt_type = $TargetType} 
+    $tgt = @{
+        $Master = @{ tgt = $tgtValue; tgt_type = $TargetType}
     }
 
     if ($State -eq 'highstate') {
@@ -101,11 +98,11 @@ function Invoke-SaltState {
 
     $arg = @{
         arg = $array
-    }    
+    }
 
     $arguments = @{
         cmd = 'local'
-        fun = 'state.apply'
+        fun = $function
         tgt = $tgt
         arg = $arg
     }

@@ -51,13 +51,13 @@ function New-SaltSchedule {
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     $schedule = Get-SaltSchedule -Name $Name -ExactMatch
 
     if ($schedule.Count -gt 0) {
         throw "Another Schedule exists already with the name: $Name"
-    } 
+    }
 
     $job = Get-SaltJob -Name $JobName -ExactMatch
     $target = Get-SaltTarget -Name $TargetName -ExactMatch
@@ -81,7 +81,7 @@ function New-SaltSchedule {
         after = $StartDate
         $IntervalUnitType = $IntervalUnits
         timezone = $Timezone
-        
+
     }
 
     if (($SplayStart -ne $null) -or ($SplayEnd -ne $null)) {
@@ -101,7 +101,7 @@ function New-SaltSchedule {
     }
 
     $return = Invoke-SaltStackAPIMethod -Resource schedule -Method save -Arguments $arguments
-    
+
     if ($return.error) {
         $errorDetail = $return.error.detail.state
         $errorMessage = $return.error.message
@@ -109,5 +109,5 @@ function New-SaltSchedule {
     } else {
         Write-Output -InputObject $return
     }
-      
+
 }

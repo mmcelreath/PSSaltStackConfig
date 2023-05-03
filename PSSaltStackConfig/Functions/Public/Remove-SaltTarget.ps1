@@ -37,7 +37,7 @@ function Remove-SaltTarget {
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     $splat = @{
         SaltConnection = $global:SaltConnection
@@ -71,13 +71,13 @@ function Remove-SaltTarget {
     }
 
     $return = Invoke-SaltStackAPIMethod -Resource tgt -Method delete_target_group -Arguments $arguments
-    
+
     if ($return.error) {
         $errorDetail = $return.error.detail.state
         $errorMessage = $return.error.message
         Write-Error "$errorMessage - $errorDetail"
     } else {
-        Write-Output -InputObject $return  
+        Write-Output -InputObject $return
     }
 
 }

@@ -33,7 +33,7 @@ function Wait-SaltJob {
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     # Convert Timeout seconds for while loop
     $Timeout = $Timeout / 3
@@ -61,8 +61,8 @@ function Wait-SaltJob {
     # Wait for job to complete
     $i = 1
 
-    while ($returnStatus.State -ne 'completed_all_successful') {    
-        
+    while ($returnStatus.State -ne 'completed_all_successful') {
+
         if ($returnStatus.State -eq 'completed_failures') {
             break
         }

@@ -46,7 +46,7 @@ function New-SaltTarget {
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     $splat = @{
         SaltConnection = $global:SaltConnection
@@ -58,7 +58,7 @@ function New-SaltTarget {
 
     if ($target.Count -gt 0) {
         throw "Another Target Group exists already with the name: $Name"
-    } 
+    }
 
     $tgt = @{
         $TargetMasterID = @{
@@ -77,5 +77,5 @@ function New-SaltTarget {
     $return = Invoke-SaltStackAPIMethod -Resource tgt -Method save_target_group -Arguments $arguments
 
     Write-Output -InputObject $return
-    
+
 }

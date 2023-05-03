@@ -67,7 +67,7 @@ function Set-SaltSchedule {
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     $splat = @{
         SaltConnection = $global:SaltConnection
@@ -86,16 +86,16 @@ function Set-SaltSchedule {
 
     if ($schedule.Count -eq 0) {
         throw 'No Schedules returned based on the information provided.'
-    } 
+    }
 
     if ($schedule.Count -gt 1) {
         throw 'More than one Schedule was returned based on the information provided.'
-    } 
+    }
 
     $scheduleID = $schedule.uuid
     $scheduleSched = $schedule.schedule
 
-    $arguments = @{        
+    $arguments = @{
         uuid = $scheduleID
     }
 
@@ -123,7 +123,7 @@ function Set-SaltSchedule {
         }
 
         if (($IntervalUnitType -ne $null) -or ($IntervalUnits -ne $null)) {
-            
+
             $scheduleIntervalType = $scheduleSched.PSObject.properties | Where-Object Name -in 'hours','minutes','seconds' | Select-Object -ExpandProperty Name
             $scheduleIntervalUnits = $scheduleSched.$scheduleIntervalType
 
@@ -137,7 +137,7 @@ function Set-SaltSchedule {
             if ($IntervalUnits) {
                 $newIntervalUnits = $IntervalUnits
             }
-            
+
             $newSchedule.PSObject.properties.remove($scheduleIntervalType)
             $newSchedule | Add-Member -NotePropertyName $newIntervalType -NotePropertyValue $newIntervalUnits
         }
