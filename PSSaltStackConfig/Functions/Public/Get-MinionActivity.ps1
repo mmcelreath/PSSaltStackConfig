@@ -1,12 +1,12 @@
-<#
+﻿<#
 .SYNOPSIS
     Gets activities for Minions.
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to query the get_returns method on the ret resource to return Activities.
 .EXAMPLE
-    Get-MinionActivity 
+    Get-MinionActivity
 
-    This will return the 50 most recent activities in SaltStack Config. 50 is the default limit. 
+    This will return the 50 most recent activities in SaltStack Config. 50 is the default limit.
 .EXAMPLE
     Get-MinionActivity -Limit 150
 
@@ -63,7 +63,7 @@ function Get-MinionActivity {
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     $arguments = @{}
 
@@ -90,10 +90,10 @@ function Get-MinionActivity {
     if ($HasErrors) {
         $arguments.Add('has_errors','true')
     }
-    
+
     $return = Invoke-SaltStackAPIMethod -Resource ret -Method get_returns -Arguments $arguments
 
-    $results = $return.ret.results 
+    $results = $return.ret.results
 
     $activity = @()
 
@@ -101,7 +101,7 @@ function Get-MinionActivity {
         $inDesiredState = @()
         $notInDesiredState = @()
         $resultsArray = @()
-        
+
         $resultProperties = $result.return.PSObject.Properties | Where-Object MemberType -eq 'NoteProperty' | Select-Object -ExpandProperty Name
 
         $minionChanged = $false
@@ -109,9 +109,9 @@ function Get-MinionActivity {
         foreach ($resultProperty in $resultProperties) {
 
             if ($result.return.$resultProperty.comment -ne  'State was not run because none of the onchanges reqs changed') {
-                
+
                 $changed = $false
-                
+
                 $testChange = $result.return.$resultProperty.changes.PSObject.members | Select-Object -First 1
 
                 if ($testChange.OverloadDefinitions) {
@@ -122,25 +122,25 @@ function Get-MinionActivity {
                 }
 
                 $resultsObj = $null
-                
+
                 $resultsObj = [PSCustomObject]@{
-                    ID        = $result.return.$resultProperty.__id__ 
-                    Result    = $result.return.$resultProperty.result 
-                    Command   = $resultProperty 
-                    StartTime = $result.return.$resultProperty.start_time 
+                    ID        = $result.return.$resultProperty.__id__
+                    Result    = $result.return.$resultProperty.result
+                    Command   = $resultProperty
+                    StartTime = $result.return.$resultProperty.start_time
                     Duration  = $result.return.$resultProperty.Duration
-                    Changes   = $result.return.$resultProperty.changes 
+                    Changes   = $result.return.$resultProperty.changes
                     PChanges  = $result.return.$resultProperty.pchanges
-                    SLS       = $result.return.$resultProperty.__sls__ 
-                    Comment   = $result.return.$resultProperty.comment 
-                    Name      = $result.return.$resultProperty.name 
-                    RunNum    = $result.return.$resultProperty.__run_num__ 
+                    SLS       = $result.return.$resultProperty.__sls__
+                    Comment   = $result.return.$resultProperty.comment
+                    Name      = $result.return.$resultProperty.name
+                    RunNum    = $result.return.$resultProperty.__run_num__
                     SkipWatch = $result.return.$resultProperty.skip_watch
                     Changed   = $changed
                 }
 
                 $resultsArray += $resultsObj
-                
+
                 if ($changed) {
                     $notInDesiredState += $resultsObj
                 } else {

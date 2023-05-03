@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Gets the status of a Salt job.
 .DESCRIPTION
@@ -20,7 +20,7 @@ function Get-SaltJobStatus {
         [Parameter(Mandatory = $true)]
         [String]
         $JobID
-        
+
     )
 
     # Check to see if there is an existing connection to SaltStack

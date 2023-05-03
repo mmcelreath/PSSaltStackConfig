@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Gets a grain(s) of a Target. Defaut TargetType is glob.
 .DESCRIPTION
@@ -16,7 +16,7 @@
 
     This will query SaltStack Config using the Target compound and return the 'osfullname' grain for the minions where ID starts with "web".
 .EXAMPLE
-    Get-MinionGrain -Target 'id:web* and os:Windows' -TargetType grain -Grain osfullname 
+    Get-MinionGrain -Target 'id:web* and os:Windows' -TargetType grain -Grain osfullname
 
     This will query SaltStack Config using the Target grains and return the 'osfullname' grain for the minions whose id starts with 'web' and where the os is Windows.
 .OUTPUTS
@@ -48,7 +48,7 @@ function Get-MinionGrain {
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     # Needs to be all lowercase
     $TargetType = $TargetType.ToLower()
@@ -60,7 +60,7 @@ function Get-MinionGrain {
         if ($minionKeyState.key_state -ne 'accepted') {
             Write-Error "The key for $Target is not currently accepted or it doesn't exist."
         }
-        
+
         $tgtValue = $minionKeyState.minion
     }
 
@@ -68,8 +68,8 @@ function Get-MinionGrain {
         $tgtValue = $Target
     }
 
-    $tgt = @{ 
-        $Master = @{ tgt = $tgtValue; tgt_type = $TargetType} 
+    $tgt = @{
+        $Master = @{ tgt = $tgtValue; tgt_type = $TargetType}
     }
 
     if ($Grain) {
@@ -88,7 +88,7 @@ function Get-MinionGrain {
     if ($Grain) {
         $arg = @{
             arg = $array
-        } 
+        }
         $arguments.Add('arg', $arg)
     }
 

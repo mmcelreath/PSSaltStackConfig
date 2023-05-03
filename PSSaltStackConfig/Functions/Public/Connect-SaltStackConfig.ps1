@@ -1,4 +1,4 @@
-Function Connect-SaltStackConfig {
+﻿Function Connect-SaltStackConfig {
     <#
     .NOTES
     Updated this function to use the methodoligy used in the SaltStackConfig module in the PowerShell Gallery.
@@ -81,7 +81,7 @@ Function Connect-SaltStackConfig {
 
         $global:SaltConnection = New-Object psobject -property @{ 'SscWebSession'=$WebSession; 'Name'=$server; 'ConnectionDetail'=$webRequestJson;
         'User'=$webRequestJson.attributes.config_name +'\'+ $username; 'Authenticated'=$webRequestJson.authenticated; PSTypeName='SscConnection' }
-    
+
         # Return the connection object
         $global:SaltConnection
     } catch {

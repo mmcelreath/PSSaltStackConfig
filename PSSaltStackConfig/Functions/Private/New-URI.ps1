@@ -1,4 +1,4 @@
-function New-URI {
+﻿function New-URI {
     [CmdletBinding()]
     [OutputType([System.Uri])]
     param (
@@ -37,7 +37,7 @@ function New-URI {
             $uri.Port = $Port
         }
         if ($PSBoundParameters.ContainsKey('EndPoint')) {
-            $uri.Path = $EndPoint 
+            $uri.Path = $EndPoint
         }
         if ($PSBoundParameters.ContainsKey('Query')) {
             $uri.Query = $Query

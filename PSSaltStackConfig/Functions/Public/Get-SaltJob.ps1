@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
     Returns a list of Jobs from SaltStack Enterprise.
 .DESCRIPTION
@@ -46,12 +46,12 @@ function Get-SaltJob {
     if (!$global:SaltConnection) {
         Write-Error 'You are not currently connected to any SaltStack servers. Please connect first using Connect-SaltStackConfig.'
         return
-    } 
+    }
 
     $arguments = @{
         limit = $Limit
     }
-    
+
     if ($Name) {
         $arguments.Add('name',$Name)
     }
@@ -73,7 +73,7 @@ function Get-SaltJob {
             $jobs = $return.ret.results
         }
     }
-        
+
     Write-Output -InputObject $jobs
 
 }
