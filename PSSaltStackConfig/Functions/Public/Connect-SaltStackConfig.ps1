@@ -41,9 +41,9 @@ Function Connect-SaltStackConfig {
         [Parameter(Mandatory=$true)]
         [PSCredential]
         $Credential,
-        # [Parameter(Mandatory=$true)]
-        # [Switch]
-        # $SkipCertificateCheck,
+        [Parameter(Mandatory=$false)]
+        [Switch]
+        $SkipCertificateCheck = $false,
         [Parameter(Mandatory=$false)]
         [System.Net.SecurityProtocolType]
         $SslProtocol
@@ -51,22 +51,6 @@ Function Connect-SaltStackConfig {
 
     $username = $Credential.GetNetworkCredential().username
     $password = $Credential.GetNetworkCredential().password
-
-#     if ($SkipCertificateCheck) {
-#         # This if statement is using example code from https://stackoverflow.com/questions/11696944/powershell-v3-invoke-webrequest-https-error
-#         add-type @"
-#         using System.Net;
-#         using System.Security.Cryptography.X509Certificates;
-#         public class TrustAllCertsPolicy : ICertificatePolicy {
-#             public bool CheckValidationResult(
-#                 ServicePoint srvPoint, X509Certificate certificate,
-#                 WebRequest request, int certificateProblem) {
-#                 return true;
-#             }
-#         }
-# "@
-#         [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
-#     } # end if SkipCertificate Check
     
     if ($SslProtocol) {
         [System.Net.ServicePointManager]::SecurityProtocol = $SslProtocol
@@ -75,12 +59,27 @@ Function Connect-SaltStackConfig {
     $loginBody = @{'username'=$username; 'password'=$password; 'config_name'=$AuthSource}
     
     try {
-        $webRequest = Invoke-WebRequest -Uri "https://$server/account/login" -SessionVariable ws
-        $ws.headers.Add('X-Xsrftoken', $webRequest.headers.'x-xsrftoken')
-        $webRequest = Invoke-WebRequest -Uri "https://$server/account/login" -WebSession $ws -method POST -body (ConvertTo-Json $loginBody)
+        $webSessionRequestParams = @{
+            Uri                  = "https://$server/account/login"
+            SessionVariable      = 'WebSession'
+            SkipCertificateCheck = $SkipCertificateCheck
+        }
+
+        $webSessionRequest = Invoke-WebRequest @webSessionRequestParams
+        $WebSession.headers.Add('X-Xsrftoken', $webSessionRequest.headers.'x-xsrftoken')
+
+        $webRequestParams = @{
+            Uri                  = "https://$server/account/login"
+            WebSession           = $WebSession
+            method               = 'POST'
+            body                 = (ConvertTo-Json $loginBody)
+            SkipCertificateCheck = $SkipCertificateCheck
+        }
+
+        $webRequest = Invoke-WebRequest @webRequestParams
         $webRequestJson = ConvertFrom-JSON $webRequest.Content
         
-        $global:SaltConnection = New-Object psobject -property @{ 'SscWebSession'=$ws; 'Name'=$server; 'ConnectionDetail'=$webRequestJson; 
+        $global:SaltConnection = New-Object psobject -property @{ 'SscWebSession'=$WebSession; 'Name'=$server; 'ConnectionDetail'=$webRequestJson; 
         'User'=$webRequestJson.attributes.config_name +'\'+ $username; 'Authenticated'=$webRequestJson.authenticated; PSTypeName='SscConnection' }
     
         # Return the connection object
