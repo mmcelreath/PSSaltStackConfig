@@ -7,7 +7,9 @@ This module started out as a project to give the ability to run some common comm
 
 [Working with the API (RaaS)](https://docs.vmware.com/en/VMware-vRealize-Automation-SaltStack-Config/8.4/use-manage-saltstack-config/GUID-FF1A0E3A-CA19-4139-B9DC-C32DC4F76202.html)
 
-A big thanks to [Ephos](https://github.com/ephos) for doing the inital dirty work to set up the API connection.
+[Aria Automation Config API Documentation](https://developer.vmware.com/apis/1179/saltstack-config-raas)
+
+A big thanks to [Ephos](https://github.com/ephos) for doing the inital dirty work to set up the the initial API connection.
 
 ## Prerquisites
 - A licensed deployment of SaltStack Enterprise or VMware vRealize Automation SaltStack Config.
