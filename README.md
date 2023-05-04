@@ -1,9 +1,11 @@
 > **This is not a complete module yet. Use at your own risk and make sure to test first.**
 
 # PSSaltStackConfig
-SaltStack Config API module providing function wrappers for the SaltStack API REST endpoints.
+A PowerShell module for the SaltStack Config API providing function wrappers for the SaltStack API REST endpoints.
 
-This module started out as a project to give the ability to run some common commands against SaltStack Config using PowerShell. This module utilizes the API for the SaltStack RAAS service. Documentation for the API can be found at the following VMWare Docs pages:
+This module started out as a project to give the ability to run some common commands against SaltStack Config using PowerShell. I started by converting a few of the most common Salt Linux commands I was running day to day and continued building on top of that. If you don't see a built in command that you're looking for, I suggest checking out the documentation for the [Invoke-SaltStackAPIMethod](#making-api-calls-with-invoke-saltstackapimethod) command below which can be used to call any API method directly.
+
+This module utilizes the API for the SaltStack RAAS service. Documentation for the API can be found at the following VMWare Docs pages:
 
 [Working with the API (RaaS)](https://docs.vmware.com/en/VMware-vRealize-Automation-SaltStack-Config/8.4/use-manage-saltstack-config/GUID-FF1A0E3A-CA19-4139-B9DC-C32DC4F76202.html)
 
@@ -39,7 +41,7 @@ Invoke-SaltTestPing -Target 'web01'
 
 ```
 
-## Making any API call using Invoke-SaltStackAPIMethod
+## Making API Calls With Invoke-SaltStackAPIMethod
 When designing this module initially, we had some functionality in mind that we wanted to see initially, so those were built out into the current functions.
 
 However, at the core of this module is the function `Invoke-SaltStackAPIMethod` which can be used to run any of the API calls supported the [SaltStack API](https://developer.vmware.com/apis/1179/saltstack-config-raas). 
