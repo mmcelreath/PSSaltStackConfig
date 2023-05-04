@@ -52,17 +52,38 @@
     $username = $Credential.GetNetworkCredential().username
     $password = $Credential.GetNetworkCredential().password
 
+    # For PowerShell versions previous to 6.0, Invoke-WebRequest -SkipCertificateCheck was not available. So use the code below if $SkipCertificateCheck = $true
+    if (($PSVersionTable.PSVersion -lt '6.0') -and ($SkipCertificateCheck -eq $true)) {
+        # This if statement is using example code from https://stackoverflow.com/questions/11696944/powershell-v3-invoke-webrequest-https-error
+        add-type @"
+        using System.Net;
+        using System.Security.Cryptography.X509Certificates;
+        public class TrustAllCertsPolicy : ICertificatePolicy {
+            public bool CheckValidationResult(
+                ServicePoint srvPoint, X509Certificate certificate,
+                WebRequest request, int certificateProblem) {
+                return true;
+            }
+        }
+"@
+        [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+    }
+
     if ($SslProtocol) {
         [System.Net.ServicePointManager]::SecurityProtocol = $SslProtocol
     }
 
     $loginBody = @{'username'=$username; 'password'=$password; 'config_name'=$AuthSource}
-
+    
     try {
         $webSessionRequestParams = @{
             Uri                  = "https://$server/account/login"
             SessionVariable      = 'WebSession'
-            SkipCertificateCheck = $SkipCertificateCheck
+        }
+
+        # If -SkipCertificateCheck = True, add SkipCertificateCheck parameter to splat in newer versions of PowerShell
+        if (($PSVersionTable.PSVersion -ge '6.0') -and ($SkipCertificateCheck -eq $true)) {
+            $webSessionRequestParams.Add('SkipCertificateCheck', $true)
         }
 
         $webSessionRequest = Invoke-WebRequest @webSessionRequestParams
@@ -73,15 +94,19 @@
             WebSession           = $WebSession
             method               = 'POST'
             body                 = (ConvertTo-Json $loginBody)
-            SkipCertificateCheck = $SkipCertificateCheck
+        }
+
+        # If -SkipCertificateCheck = True, add SkipCertificateCheck parameter to splat in newer versions of PowerShell
+        if (($PSVersionTable.PSVersion -ge '6.0') -and ($SkipCertificateCheck -eq $true)) {
+            $webRequestParams.Add('SkipCertificateCheck', $true)
         }
 
         $webRequest = Invoke-WebRequest @webRequestParams
         $webRequestJson = ConvertFrom-JSON $webRequest.Content
-
-        $global:SaltConnection = New-Object psobject -property @{ 'SscWebSession'=$WebSession; 'Name'=$server; 'ConnectionDetail'=$webRequestJson;
+        
+        $global:SaltConnection = New-Object psobject -property @{ 'SscWebSession'=$WebSession; 'Name'=$server; 'ConnectionDetail'=$webRequestJson; 
         'User'=$webRequestJson.attributes.config_name +'\'+ $username; 'Authenticated'=$webRequestJson.authenticated; PSTypeName='SscConnection' }
-
+    
         # Return the connection object
         $global:SaltConnection
     } catch {
