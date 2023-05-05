@@ -16,7 +16,7 @@ A big thanks to [Ephos](https://github.com/ephos) for doing the inital dirty wor
 - A user with API access to SaltStack Config.
 
 ## Global Connection Variable
-This module utilizes a global variable called $global:SaltConnection which stores the details of the connection to the SaltStack API. Running the following command will create the $global:SaltConnection in your current session:
+This module utilizes a global variable called `$global:SaltConnection` which stores the details of the connection to the SaltStack API. Running the following command will create the `$global:SaltConnection` in your current session:
 
 ```powershell
 Connect-SaltStackConfig -SaltConfigServer <RAAS_Server> -Credential $credential
