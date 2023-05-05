@@ -52,23 +52,6 @@
     $username = $Credential.GetNetworkCredential().username
     $password = $Credential.GetNetworkCredential().password
 
-    # For PowerShell versions previous to 6.0, Invoke-WebRequest -SkipCertificateCheck was not available. So use the code below if $SkipCertificateCheck = $true
-    if (($PSVersionTable.PSVersion -lt '6.0') -and ($SkipCertificateCheck -eq $true)) {
-        # This if statement is using example code from https://stackoverflow.com/questions/11696944/powershell-v3-invoke-webrequest-https-error
-        add-type @"
-        using System.Net;
-        using System.Security.Cryptography.X509Certificates;
-        public class TrustAllCertsPolicy : ICertificatePolicy {
-            public bool CheckValidationResult(
-                ServicePoint srvPoint, X509Certificate certificate,
-                WebRequest request, int certificateProblem) {
-                return true;
-            }
-        }
-"@
-        [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
-    }
-
     if ($SslProtocol) {
         [System.Net.ServicePointManager]::SecurityProtocol = $SslProtocol
     }
@@ -76,6 +59,23 @@
     $loginBody = @{'username'=$username; 'password'=$password; 'config_name'=$AuthSource}
     
     try {
+        # For PowerShell versions previous to 6.0, Invoke-WebRequest -SkipCertificateCheck was not available. So use the code below if $SkipCertificateCheck = $true
+        if (($PSEdition -eq 'Desktop') -and ($SkipCertificateCheck -eq $true)) {
+            # This if statement is using example code from https://stackoverflow.com/questions/11696944/powershell-v3-invoke-webrequest-https-error
+            add-type @"
+            using System.Net;
+            using System.Security.Cryptography.X509Certificates;
+            public class TrustAllCertsPolicy : ICertificatePolicy {
+                public bool CheckValidationResult(
+                    ServicePoint srvPoint, X509Certificate certificate,
+                    WebRequest request, int certificateProblem) {
+                    return true;
+                }
+            }
+"@
+            [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+        }
+        
         $webSessionRequestParams = @{
             Uri                  = "https://$server/account/login"
             SessionVariable      = 'WebSession'
@@ -97,7 +97,7 @@
         }
 
         # If -SkipCertificateCheck = True, add SkipCertificateCheck parameter to splat in newer versions of PowerShell
-        if (($PSVersionTable.PSVersion -ge '6.0') -and ($SkipCertificateCheck -eq $true)) {
+        if (($PSEdition -eq 'Core') -and ($SkipCertificateCheck -eq $true)) {
             $webRequestParams.Add('SkipCertificateCheck', $true)
         }
 
