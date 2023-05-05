@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-    Gets the state of a Minions key.
+    Gets the state of a Minion's key.
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to query the get_minion_key_state method on the minions resource to return a minion's key state.
 .EXAMPLE
