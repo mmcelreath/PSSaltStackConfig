@@ -1,12 +1,16 @@
 <#
 .SYNOPSIS
-    Invokes a State.Apply command against a Target.
+    Invokes a State.Apply command against a Target. Returns the Job ID of the state run. `Get-SaltJobStatus` can be used to check the status of a job. Use `Wait-SaltJob` to wait for the job to finish. Use `Get-SaltJobResults` to retrieve the results of a job once it is finished.
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the route_cmd method on the cmd resource to run a state.apply against a target.
 .EXAMPLE
     Invoke-SaltState -Target computername -State webserver
 
     This will run the webserver state file against computername.
+.EXAMPLE
+    Invoke-SaltState -Target computername -State webserver -Master <saltmaster>
+
+    This will run the webserver state file against computername on the specified master server. The -Master parameter defaults to '*' for all masters.
 .EXAMPLE
     Invoke-SaltState -Target computername -State webserver -Test
 
