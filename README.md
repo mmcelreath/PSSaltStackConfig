@@ -1,5 +1,3 @@
-> **This is not a complete module yet. Use at your own risk and make sure to test first.**
-
 # PSSaltStackConfig
 A PowerShell module for the SaltStack Config API providing function wrappers for the SaltStack API REST endpoints.
 
