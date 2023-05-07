@@ -22,7 +22,7 @@
 .EXAMPLE
     Get-MinionActivity -Function state.apply
 
-    This will return the 50 most recent activities in SaltStack Config that us the function state.apply.
+    This will return the 50 most recent activities in SaltStack Config that use the function state.apply.
 .OUTPUTS
     PSCustomObject
 .NOTES

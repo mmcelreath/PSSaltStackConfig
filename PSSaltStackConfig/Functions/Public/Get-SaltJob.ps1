@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-    Returns a list of Jobs from SaltStack Enterprise.
+    Returns a list of Jobs from SaltStack Config.
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the get_jobs method on the job resource to return a list of Jobs.
 .EXAMPLE
@@ -12,7 +12,7 @@
 
     This will return Jobs matching the name provided.
 .EXAMPLE
-    Get-SaltJob -UUID '3e376a32-f90c-4756-7933-253e1f4h6b87'
+    Get-SaltJob -UUID '3706a32-f90c-9756-78e3-25e3te1f4h6b87'
 
     This will return a Job matching the UUID provided.
 .OUTPUTS

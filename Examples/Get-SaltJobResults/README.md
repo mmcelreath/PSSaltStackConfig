@@ -1,7 +1,7 @@
-# Invoke-SaltState - Examples
-Invokes a State.Apply command against a Target. Returns the Job ID of the state run. `Get-SaltJobStatus` can be used to check the status of a job. Use `Wait-SaltJob` to wait for the job to finish. Use `Get-SaltJobResults` to retrieve the results of a job once it is finished.
+# Get-SaltJobResults - Examples
+Gets the detailed results of a Salt job. Provides more details than [Get-SaltJobStatus](../Get-SaltJobStatus/README.md)
 
-This function will use the Invoke-SaltStackAPIMethod command to use the route_cmd method on the cmd resource to run a state.apply against a target.
+This function will use the Invoke-SaltStackAPIMethod command to use the get_jid on the cmd resource to return the detailed results of a Salt job.
 
 ### Connect to the SaltStack server
 
@@ -9,39 +9,11 @@ This function will use the Invoke-SaltStackAPIMethod command to use the route_cm
 Connect-SaltStackConfig -SaltConfigServer <RAAS_Server> -Credential $credential
 ```
 
-### Example - Run a highstate against a single target with TargetType = glob
+### Example - Return the detailed results of $JobID
 
 ```powershell
-Invoke-SaltState -Target minionid -State highstate -TargetType glob
-```
+Get-SaltJobResults -JobID $JobID
 
-### Example - Run a State against a single target in test mode
-
-```powershell
-Invoke-SaltState -Target minionid -State highstate -TargetType glob -Test
-```
-
-### Example - Run the webserver state file against minionid on the specified master server. The -Master parameter defaults to '*' for all masters
-
-```powershell
-Invoke-SaltState -Target minionid -State webserver -Master <saltmaster>
-```
-
-### Example - Run a Salt state against a single minion. TargetType defaults to "glob"
-
-```powershell
-Invoke-SaltState -Target minionid -State webserver
-```
-
-### Example - Run a highstate against minionid, excluding the initial_setup and set_psversion states. The Exclude parameter should be a comma separated string
-```powershell
-Invoke-SaltState -Target minionid -State highstate -Exclude 'initial_setup,set_psversion'
-```
-
-### Example - Run a highstate against a compound target where the webserver grain is set to true
-
-```powershell
-Invoke-SaltState -Target 'G@webserver:true' -TargetType compound -State highstate
 ```
 
 ### Example - Run a State against a minion, wait for the job to complete, then retrieve the job results using `Get-SaltJobResults`
