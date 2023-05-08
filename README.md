@@ -42,8 +42,8 @@ Invoke-SaltTestPing -Target 'web01'
 ## Making API Calls With Invoke-SaltStackAPIMethod
 When designing this module, we had some functionality in mind that we wanted to see initially, so those were built out into the current functions.
 
-However, at the core of this module is the function `Invoke-SaltStackAPIMethod` which can be used to run any of the API calls supported the [SaltStack API](https://developer.vmware.com/apis/1179/saltstack-config-raas). 
+However, at the core of this module is the function `Invoke-SaltStackAPIMethod` which can be used to run any of the API calls supported by the [SaltStack API](https://developer.vmware.com/apis/1179/saltstack-config-raas).
 
-The `Invoke-SaltStackAPIMethod` takes a Resource, Method and Arguments (optional) as parameters. Here are a few examples on how to use `Invoke-SaltStackAPIMethod` to get data from the API:
+The `Invoke-SaltStackAPIMethod` takes a Resource, Method and Arguments (optional) as parameters.
 
 Check out the examples under [Invoke-SaltStackAPIMethod](./Examples/Invoke-SaltStackAPIMethod/README.md) for more details.
