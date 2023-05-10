@@ -10,7 +10,7 @@
 .EXAMPLE
     Wait-SaltJob -JobID $JobId -Timeout 500
 
-    This will query the SaltStack Config API and wait for $JobID to complete with a timeout of 500 seconds (300 is the default value if omitted)
+    This will query the SaltStack Config API and wait for $JobID to complete with a timeout of 500 seconds (60 is the default value if omitted)
 .OUTPUTS
     PSCustomObject
 .NOTES
@@ -26,7 +26,7 @@ function Wait-SaltJob {
         $JobID,
         # Timeout
         [int]
-        $Timeout = 300
+        $Timeout = 60
     )
 
     # Check to see if there is an existing connection to SaltStack
@@ -35,53 +35,62 @@ function Wait-SaltJob {
         return
     }
 
-    # Convert Timeout seconds for while loop
-    $Timeout = $Timeout / 3
+    $date = Get-Date
 
     # Getting Job Status
     $returnStatus = Get-SaltJobStatus -JobID $JobID
     $jobStatus = $returnStatus.JobStatus
 
-    # Wait for the job to be created
-    $i = 1
+    $timeDifference = $date - $returnStatus.StartTime.ToLocalTime()
 
-    while ($jobStatus -eq 'not-found'){
-        if($i -gt 15) {
-            throw "JID: $JobID was not found."
-        } else {
-            # Write-Host $jobStatus
-            Start-Sleep -Seconds 3
-            $returnStatus = Get-SaltJobStatus -JobID $JobID
-            $jobStatus = $returnStatus.JobStatus
+    if ($timeDifference.TotalSeconds -gt $Timeout) {
+        # If the duration of the Job ID has already exceeded the $Timeout, return the job status
+        $returnStatus = Get-SaltJobStatus -JobID $JobID
 
-            $i++
+        Write-Output -InputObject $returnStatus
+    } else {
+        # Wait for the job to be created
+        $i = 1
+
+        while ($jobStatus -eq 'not-found'){
+            if($i -gt 5) {
+                throw "JID: $JobID was not found."
+            } else {
+                Write-Verbose "Waiting for job $jobID to start..."
+                Start-Sleep -Seconds 5
+                $returnStatus = Get-SaltJobStatus -JobID $JobID
+                $jobStatus = $returnStatus.JobStatus
+
+                $i++
+            }
         }
+
+        # Wait for job to complete
+        while ($returnStatus.State -ne 'completed_all_successful') {
+
+            Write-Verbose "Waiting for job $jobID to finish..."
+
+            if ($returnStatus.State -eq 'completed_failures') {
+                break
+            }
+
+            $date = Get-Date
+            $timeDifference = $date - $returnStatus.StartTime.ToLocalTime()
+
+            if($timeDifference.TotalSeconds -gt $Timeout) {
+                Write-Warning "Command timed out while waiting for JID $JobID to complete. Try setting -Timeout to a value higher than 60."
+        
+                break
+            } else {
+                # Write-Host $returnStatus.State
+                Start-Sleep -Seconds 5
+                $returnStatus = Get-SaltJobStatus -JobID $JobID -Verbose:$false
+            }
+
+        }
+
+        $returnStatus = Get-SaltJobStatus -JobID $JobID
+
+        Write-Output -InputObject $returnStatus
     }
-
-    # Wait for job to complete
-    $i = 1
-
-    while ($returnStatus.State -ne 'completed_all_successful') {
-
-        if ($returnStatus.State -eq 'completed_failures') {
-            break
-        }
-
-        if($i -gt $Timeout) {
-            Write-Warning "Command timed out while waiting for JID $JobID to complete."
-            break
-        } else {
-            # Write-Host $returnStatus.State
-            Start-Sleep -Seconds 3
-            $returnStatus = Get-SaltJobStatus -JobID $JobID
-
-            $i++
-        }
-
-    }
-
-    $returnStatus = Get-SaltJobStatus -JobID $JobID
-
-    Write-Output -InputObject $returnStatus
-
 }
