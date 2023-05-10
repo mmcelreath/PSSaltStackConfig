@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Invokes a Test.Ping command against a Target.
+    Invokes a Test.Ping command against a Target with a default timeout of 60 seconds.
 .DESCRIPTION
     This function will use the Invoke-SaltStackAPIMethod command to use the route_cmd method on the cmd resource to run a test.ping against a target.
 .EXAMPLE
@@ -15,6 +15,10 @@
     Invoke-SaltTestPing -Target 'G@id:web*' -TargetType compound
 
     This will initiate a Test.Ping against all minions matching the compound Target.
+.EXAMPLE
+    Invoke-SaltTestPing -Target 'G@id:web*' -TargetType compound -Timeout 300
+
+    This will initiate a Test.Ping against all minions matching the compound Target setting the timeout to 300 seconds.
 .EXAMPLE
     Invoke-SaltTestPing -Target 'G@id:web*' -TargetType compound -Async
 
@@ -40,7 +44,7 @@ function Invoke-SaltTestPing {
         $TargetType = 'glob',
         # Timeout
         [Int]
-        $Timeout = 300,
+        $Timeout = 60,
         # Async
         [Switch]
         $Async
