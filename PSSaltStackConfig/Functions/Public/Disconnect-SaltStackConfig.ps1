@@ -19,7 +19,7 @@
         $name = $global:SaltConnection.Name
         $user = $global:SaltConnection.User
         $global:SaltConnection = $null
-        Remove-Variable -Name SaltConnection
+        Remove-Variable -Name SaltConnection -Scope global -ErrorAction SilentlyContinue
         Write-Warning "$user has been disconnected fromn $name. To run commands against SaltStack Config, run Connect-SaltStackConfig to create a new connections."
     }
 
