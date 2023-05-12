@@ -1,10 +1,10 @@
 ﻿Function Disconnect-SaltStackConfig {
     <#
     .SYNOPSIS
-    Use this function to create the cookie/header to connect to SaltStack Config RaaS API
+    Use this function to disconnect your session from the SaltStack Config RaaS API
     .DESCRIPTION
-    This function will allow you to connect to a vRealize Automation SaltStack Config RaaS API.
-    A global variable ($global:SaltConnection) will be set with the Servername & Cookie/Header value for use by other functions.
+    This function will disconnect your session from a vRealize Automation SaltStack Config RaaS API.
+    A global variable ($global:SaltConnection) which should have originally been created by the Connect-SaltStackConfig will be set to $null by running this function.
     .EXAMPLE
     Disconnect-SaltStackConfig
 
