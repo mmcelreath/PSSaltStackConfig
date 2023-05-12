@@ -12,7 +12,7 @@
 RootModule = 'PSSaltStackConfig.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.2'
+ModuleVersion = '1.0.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -33,7 +33,7 @@ Copyright = '(c) 2023 Matt McElreath. All rights reserved.'
 Description = 'SaltStack Config API module. Provides function wrappers for the SaltStack API REST endpoints.'
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-FunctionsToExport = 'Connect-SaltStackConfig','Invoke-SaltStackAPIMethod','Get-MinionKeyState','Set-MinionKeyState','Invoke-SaltState','Get-SaltJobStatus','Wait-SaltJob','Get-SaltJobResults',
+FunctionsToExport = 'Connect-SaltStackConfig', 'Disconnect-SaltStackConfig', 'Invoke-SaltStackAPIMethod','Get-MinionKeyState','Set-MinionKeyState','Invoke-SaltState','Get-SaltJobStatus','Wait-SaltJob','Get-SaltJobResults',
                     'Invoke-SaltComplianceReport','Get-SaltTarget','Set-SaltTarget','New-SaltTarget','Remove-SaltTarget','Get-SaltJob', 'Get-SaltSchedule','New-SaltSchedule','Set-SaltSchedule',
                     'Remove-SaltSchedule','Get-MinionGrain','Invoke-SaltTestPing','Get-MinionActivity'
 
